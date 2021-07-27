@@ -1,7 +1,7 @@
 <mvc:View controllerName="ProjBrowseOrders.browseorders.controller.Main" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
     <List headerText="Lista de Produtos" items="{myModel>/}">
         <items>
-            <StandardListItem title="{myModel>Name}" info="{myModel>Description}" />
+            <StandardListItem title="{myModel>OrderID}" info=" rrr {myModel>Customer/CompanyName}" />
         </items>
     </List>
 </mvc:View>
