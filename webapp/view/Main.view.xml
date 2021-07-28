@@ -1,7 +1,18 @@
-<mvc:View controllerName="ProjBrowseOrders.browseorders.controller.Main" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
-    <List headerText="Lista de Produtos" items="{myModel>/}">
-        <items>
-            <StandardListItem title="{myModel>OrderID}" info=" rrr {myModel>Customer/CompanyName}" />
-        </items>
+<mvc:View 
+controllerName="ProjBrowseOrders.browseorders.controller.Main" 
+xmlns:mvc="sap.ui.core.mvc" 
+displayBlock="true" 
+xmlns="sap.m">
+    <List headerText="Orders (50)" items="{modelOrders>/}">
+        <ObjectListItem
+            title="Order {modelOrders>OrderID}"
+            type="Active"
+            number="{path: 'modelOrders>OrderDate', formatter: '.Formatter.dateFormatNumbers'}">
+            <firstStatus>
+                <ObjectStatus text="Status"/>
+            </firstStatus>
+            <ObjectAttribute text="{modelOrders>Customer/CompanyName}"/>
+            <ObjectAttribute text="Shipped: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
+        </ObjectListItem>
     </List>
 </mvc:View>
