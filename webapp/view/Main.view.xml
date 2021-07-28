@@ -3,16 +3,36 @@ controllerName="ProjBrowseOrders.browseorders.controller.Main"
 xmlns:mvc="sap.ui.core.mvc" 
 displayBlock="true" 
 xmlns="sap.m">
-    <List headerText="Orders (50)" items="{modelOrders>/}">
+<Page title="Orders (50)">
+    <subHeader>
+        <Toolbar>
+            <SearchField width="30%" />
+        </Toolbar>
+	</subHeader>
+    <List items="{modelOrders>/}">
         <ObjectListItem
             title="Order {modelOrders>OrderID}"
             type="Active"
-            number="{path: 'modelOrders>OrderDate', formatter: '.Formatter.dateFormatNumbers'}">
+            number="{path: 'modelOrders>RequiredDate', formatter: '.Formatter.dateFormatNumbers'}">
             <firstStatus>
-                <ObjectStatus text="Status"/>
+                <ObjectStatus 
+                text="{parts: [
+                    {path: 'modelOrders>RequiredDate'},
+                    {path: 'modelOrders>ShippedDate'},
+                    {path: 'modelOrders>OrderID'}
+                ],
+                formatter:'.Formatter.shippedText'
+                }" state="{parts: [
+                    {path: 'modelOrders>RequiredDate'},
+                    {path: 'modelOrders>ShippedDate'}
+                ],
+                formatter:'.Formatter.shippedState'
+                }"
+                />
             </firstStatus>
             <ObjectAttribute text="{modelOrders>Customer/CompanyName}"/>
-            <ObjectAttribute text="Shipped: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
+            <ObjectAttribute text="Enviado: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
         </ObjectListItem>
     </List>
+    </Page>
 </mvc:View>
