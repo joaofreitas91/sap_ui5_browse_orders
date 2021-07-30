@@ -38,8 +38,6 @@ sap.ui.define([], function () {
             const betweenDays = requiredDate - shippedDate
             const difference = betweenDays / 1000 / 60 / 60 / 24
 
-            // console.log(`A ordem ${shippedOrder} foi entregue com ${difference} dias de antecendencia`)
-
             if (difference < 0) {
                 return "Error"
             } else if (difference >= 0 && difference < 20) {

@@ -6,10 +6,10 @@ xmlns="sap.m">
 <Page title="Orders (50)">
     <subHeader>
         <Toolbar>
-            <SearchField width="30%" />
+             <SearchField width="30%" search=".onSearch"/>
         </Toolbar>
 	</subHeader>
-    <List items="{modelOrders>/}">
+    <List items="{modelOrders>/}" id="listOrders">
         <ObjectListItem
             title="Order {modelOrders>OrderID}"
             type="Active"
@@ -31,7 +31,7 @@ xmlns="sap.m">
                 />
             </firstStatus>
             <ObjectAttribute text="{modelOrders>Customer/CompanyName}"/>
-            <ObjectAttribute text="Enviado: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
+            <ObjectAttribute text="Shipped: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
         </ObjectListItem>
     </List>
     </Page>
