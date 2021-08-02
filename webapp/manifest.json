@@ -78,6 +78,11 @@
           "name": "Main",
           "pattern": "",
           "target": "Main"
+        },
+        {
+          "name": "Detail",
+          "pattern": "detail/{orderPath}",
+          "target": "Detail"
         }
       ],
       "targets": {
@@ -87,6 +92,12 @@
           "clearControlAggregation": false,
           "viewId": "Main",
           "viewName": "Main"
+        },
+        "Detail": {
+          "viewType": "XML",
+          "transition": "slide",
+          "viewId": "Detail",
+          "viewName": "Detail"
         }
       }
     }

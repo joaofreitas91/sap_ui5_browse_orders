@@ -2,37 +2,39 @@
 controllerName="ProjBrowseOrders.browseorders.controller.Main" 
 xmlns:mvc="sap.ui.core.mvc" 
 displayBlock="true" 
-xmlns="sap.m">
-<Page title="Orders (50)">
-    <subHeader>
-        <Toolbar>
-             <SearchField width="30%" search=".onSearch"/>
-        </Toolbar>
-	</subHeader>
-    <List items="{modelOrders>/}" id="listOrders">
-        <ObjectListItem
-            title="Order {modelOrders>OrderID}"
-            type="Active"
-            number="{path: 'modelOrders>RequiredDate', formatter: '.Formatter.dateFormatNumbers'}">
-            <firstStatus>
-                <ObjectStatus 
-                text="{parts: [
-                    {path: 'modelOrders>RequiredDate'},
-                    {path: 'modelOrders>ShippedDate'},
-                    {path: 'modelOrders>OrderID'}
-                ],
-                formatter:'.Formatter.shippedText'
-                }" state="{parts: [
-                    {path: 'modelOrders>RequiredDate'},
-                    {path: 'modelOrders>ShippedDate'}
-                ],
-                formatter:'.Formatter.shippedState'
-                }"
-                />
-            </firstStatus>
-            <ObjectAttribute text="{modelOrders>Customer/CompanyName}"/>
-            <ObjectAttribute text="Shipped: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
-        </ObjectListItem>
-    </List>
+xmlns="sap.m"
+>
+    <Page title="Orders (50)">
+        <subHeader>
+            <Toolbar>
+                <SearchField width="30%" search=".onSearch"/>
+            </Toolbar>
+        </subHeader>
+        <List items="{modelOrders>/}" id="listOrders">
+            <ObjectListItem
+                title="Order {modelOrders>OrderID}"
+                type="Active"
+                number="{path: 'modelOrders>RequiredDate', formatter: '.Formatter.dateFormatNumbers'}"
+                press=".navDetail">
+                <firstStatus>
+                    <ObjectStatus 
+                    text="{parts: [
+                        {path: 'modelOrders>RequiredDate'},
+                        {path: 'modelOrders>ShippedDate'},
+                        {path: 'modelOrders>OrderID'}
+                    ],
+                    formatter:'.Formatter.shippedText'
+                    }" state="{parts: [
+                        {path: 'modelOrders>RequiredDate'},
+                        {path: 'modelOrders>ShippedDate'}
+                    ],
+                    formatter:'.Formatter.shippedState'
+                    }"
+                    />
+                </firstStatus>
+                <ObjectAttribute text="{modelOrders>Customer/CompanyName}"/>
+                <ObjectAttribute text="Shipped: {path: 'modelOrders>ShippedDate', formatter: '.Formatter.dateFormatMonths'}" />
+            </ObjectListItem>
+        </List>
     </Page>
 </mvc:View>
