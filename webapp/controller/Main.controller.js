@@ -12,6 +12,7 @@ sap.ui.define([
 
     return Controller.extend("ProjBrowseOrders.browseorders.controller.Main", {
         Formatter: Formatter,
+
         onInit: function () {
             // this.byId("listOrders").setBusy(true)
             BusyIndicator.show()
@@ -27,7 +28,7 @@ sap.ui.define([
                     "$expand": "Customer"
                 },
                 success: function (response) {
-                    // console.log(response.results[0])
+                    console.log(response.results[0])
 
                     const model = new JSONModel(response.results)
                     this.getView().setModel(model, "modelOrders")

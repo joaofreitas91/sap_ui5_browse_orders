@@ -14,7 +14,7 @@ xmlns="sap.m"
             <ObjectListItem
                 title="Order {modelOrders>OrderID}"
                 type="Active"
-                number="{path: 'modelOrders>RequiredDate', formatter: '.Formatter.dateFormatNumbers'}"
+                number="{path:'modelOrders>RequiredDate', formatter:'.Formatter.dateFormatNumbers'}"
                 press=".navDetail">
                 <firstStatus>
                     <ObjectStatus 

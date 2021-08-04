@@ -1,7 +1,85 @@
 <mvc:View
 controllerName="ProjBrowseOrders.browseorders.controller.Detail"
 xmlns:mvc="sap.ui.core.mvc"
-xmlns="sap.m">
-    <Page title="Detail Page">
-    </Page>
+xmlns:f="sap.f"
+xmlns="sap.m"
+xmlns:layout="sap.ui.layout">
+    <f:DynamicPage>
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="Order {modelDetail>/OrderID} (80)"/>
+                </f:heading>
+                <f:navigationActions>
+						<Button
+                            icon="sap-icon://decline"
+                            type="Transparent" 
+                            press=".onNavback"/>
+					</f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <ObjectAttribute title="Customer" text="{modelDetail>/ShipName}"/>
+                        <ObjectAttribute title="Ordered" text="{path: 'modelDetail>/OrderDate', formatter: '.Formatter.dateFormatMonths'}"/>
+                        <ObjectAttribute title="Shipped" text="{path: 'modelDetail>/ShippedDate', formatter: '.Formatter.dateFormatMonths'}"/>
+                    </layout:VerticalLayout>
+
+                    <layout:VerticalLayout>
+                        <ObjectAttribute title="Price"/>
+                        <ObjectStatus text="Tem que arrumar um jeito pra pegar o total"  />
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+		</f:header>
+        <f:content>
+            <Table items="{modelDetail>/Order_Details/results/}">
+                <headerToolbar>
+                    <OverflowToolbar>
+                    <content> 
+                        <Title text="Products" level="H2"/>
+                    </content> 
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column
+                        width="12em">
+                        <Text text="Product" />
+                    </Column>
+                    <Column
+                        demandPopin="true">
+                        <Text text="Unit Price" />
+                    </Column>
+                    <Column
+                        demandPopin="true"
+                        hAlign="End">
+                        <Text text="Quantity" />
+                    </Column>
+                    <Column
+                        hAlign="End">
+                        <Text text="Total" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                        <cells>
+                            <ObjectIdentifier
+                                title="Product Here"
+                                text="123"/>
+                            <ObjectNumber
+                                    number="{modelDetail>UnitPrice}"
+                                    unit="USD" />
+                            <ObjectNumber
+                                number="100.000" />
+                            <ObjectNumber
+                                    number="44444"
+                                    unit="BTC" />
+                        </cells>
+                    </ColumnListItem>
+		        </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
 </mvc:View>
