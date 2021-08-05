@@ -33,7 +33,7 @@ sap.ui.define([
 
             this.odata.read(`/Orders( ${orderPath} )`, {
                 urlParameters: {
-                    "$expand": "Order_Details,Order_Details/Product"
+                    "$expand": "Order_Details,Employee,Order_Details/Product"
                 },
                 success: function (res) {
                     var obj = {}
@@ -58,6 +58,7 @@ sap.ui.define([
                     // console.log(res.EmployeeID)
                     const model = new JSONModel(res)
                     this.getView().setModel(model, "modelDetail")
+
                     BusyIndicator.hide()
                 }.bind(this),
                 error: function (error) {

@@ -3,7 +3,8 @@ controllerName="ProjBrowseOrders.browseorders.controller.Detail"
 xmlns:mvc="sap.ui.core.mvc"
 xmlns:f="sap.f"
 xmlns="sap.m"
-xmlns:layout="sap.ui.layout">
+xmlns:layout="sap.ui.layout"
+xmlns:form="sap.ui.layout.form">
     <f:DynamicPage>
         <f:title>
             <f:DynamicPageTitle>
@@ -26,7 +27,6 @@ xmlns:layout="sap.ui.layout">
                         <ObjectAttribute title="Ordered" text="{path: 'modelDetail>/OrderDate', formatter: '.Formatter.dateFormatMonths'}"/>
                         <ObjectAttribute title="Shipped" text="{path: 'modelDetail>/ShippedDate', formatter: '.Formatter.dateFormatMonths'}"/>
                     </layout:VerticalLayout>
-
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Price"/>
                         <ObjectStatus text="{modelTotal>/total}"  />
@@ -35,54 +35,148 @@ xmlns:layout="sap.ui.layout">
             </f:DynamicPageHeader>
 		</f:header>
         <f:content>
-            <Table items="{modelDetail>/Order_Details/results/}">
-                <headerToolbar>
-                    <OverflowToolbar>
-                    <content> 
-                        <Title text="Products ({modelTotal>/lenght})" level="H2"/>
-                    </content> 
-                    </OverflowToolbar>
-                </headerToolbar>
-                <columns>
-                    <Column
-                        width="12em">
-                        <Text text="Product" />
-                    </Column>
-                    <Column
-                        demandPopin="true">
-                        <Text text="Unit Price" />
-                    </Column>
-                    <Column
-                        demandPopin="true"
-                        hAlign="End">
-                        <Text text="Quantity" />
-                    </Column>
-                    <Column
-                        hAlign="End">
-                        <Text text="Total" />
-                    </Column>
-                </columns>
-                <items>
-                    <ColumnListItem>
-                        <cells>
-                            <ObjectIdentifier
-                                title="{modelDetail>Product/ProductName}"
-                                text="{modelDetail>ProductID}"/>
-                            <ObjectNumber
-                                number="{modelDetail>UnitPrice}"
-                                unit="USD"/>
-                            <ObjectNumber
-                                number="{modelDetail>Quantity}" />
-                            <ObjectNumber
-                                number="{parts: [
-                                {path: 'modelDetail>UnitPrice'},
-                                {path: 'modelDetail>Quantity'}
-                                ], formatter: '.Formatter.sumItemOrder'}"
-                                unit="USD" />
-                        </cells>
-                    </ColumnListItem>
-		        </items>
-            </Table>
+            <VBox>
+                <IconTabBar
+                    id="idIconTabBarMulti"
+                    expanded="false"
+                    class="sapUiResponsiveContentPadding">
+                    <items>
+                        <IconTabFilter icon="sap-icon://shipping-status" key="info">
+                            <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <Title text="Shipping Address"/>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <VBox>
+                                    <form:SimpleForm id="SimpleFormDisplay354"
+                                        editable="false"
+                                        layout="ResponsiveGridLayout"
+                                        title="Address"
+                                        labelSpanXL="3"
+                                        labelSpanL="3"
+                                        labelSpanM="3"
+                                        labelSpanS="12"
+                                        adjustLabelSpan="false"
+                                        emptySpanXL="4"
+                                        emptySpanL="4"
+                                        emptySpanM="4"
+                                        emptySpanS="0"
+                                        columnsXL="1"
+                                        columnsL="1"
+                                        columnsM="1"
+                                        singleContainerFullSize="false" >
+                                        <form:content>
+                                            <Label text="Name" />
+                                            <Text text="{modelDetail>/ShipName}" />
+                                            <Label text="Street" />
+                                            <Text text="{modelDetail>/ShipAddress}" />
+                                            <Label text="ZIP Code/City:" />
+                                            <Text text="{modelDetail>/ShipPostalCode} {modelDetail>/ShipCity}" />
+                                            <Label text="Region" />
+                                            <ObjectStatus 
+                                                text="{path: 'modelDetail>/ShipRegion', formatter: '.Formatter.handleNullText'}" 
+                                                state="{path: 'modelDetail>/ShipRegion', formatter: '.Formatter.handleNullState'}" />
+                                            <Label text="Country" />
+                                            <Text text="{modelDetail>/ShipCountry}" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </VBox>
+                            </Panel>
+                        </IconTabFilter>
+                        <IconTabFilter icon="sap-icon://employee" key="Info">
+                            <Panel width="auto" class="sapUiResponsiveMargin" accessibleRole="Region">
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <Title text="Processor Information"/>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <VBox>
+                                    <form:SimpleForm id="SimpleFormDisplay3545"
+                                        editable="false"
+                                        layout="ResponsiveGridLayout"
+                                        title="Address"
+                                        labelSpanXL="3"
+                                        labelSpanL="3"
+                                        labelSpanM="3"
+                                        labelSpanS="12"
+                                        adjustLabelSpan="false"
+                                        emptySpanXL="4"
+                                        emptySpanL="4"
+                                        emptySpanM="4"
+                                        emptySpanS="0"
+                                        columnsXL="1"
+                                        columnsL="1"
+                                        columnsM="1"
+                                        singleContainerFullSize="false" >
+                                        <form:content>
+                                            <Label text="Name" />
+                                            <Text text="{modelDetail>/Employee/FirstName} {modelDetail>/Employee/LastName}" />
+
+                                            <Label text="Employee ID" />
+                                            <Text text="{modelDetail>/Employee/EmployeeID}" />
+
+                                            <Label text="Job Title" />
+                                            <Text text="{modelDetail>/Employee/Title}" />
+
+                                            <Label text="Phone" />
+                                            <Text text="{modelDetail>/Employee/HomePhone}" />
+                                        </form:content>
+                                    </form:SimpleForm>
+                                </VBox>
+                            </Panel>
+                        </IconTabFilter>
+                    </items>
+                </IconTabBar>
+                <Table items="{modelDetail>/Order_Details/results/}">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                        <content> 
+                            <Title text="Products ({modelTotal>/lenght})" level="H2"/>
+                        </content> 
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column
+                            width="12em">
+                            <Text text="Product" />
+                        </Column>
+                        <Column
+                            demandPopin="true">
+                            <Text text="Unit Price" />
+                        </Column>
+                        <Column
+                            demandPopin="true"
+                            hAlign="End">
+                            <Text text="Quantity" />
+                        </Column>
+                        <Column
+                            hAlign="End">
+                            <Text text="Total" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <ObjectIdentifier
+                                    title="{modelDetail>Product/ProductName}"
+                                    text="{modelDetail>ProductID}"/>
+                                <ObjectNumber
+                                    number="{modelDetail>UnitPrice}"
+                                    unit="USD"/>
+                                <ObjectNumber
+                                    number="{modelDetail>Quantity}" />
+                                <ObjectNumber
+                                    number="{parts: [
+                                    {path: 'modelDetail>UnitPrice'},
+                                    {path: 'modelDetail>Quantity'}
+                                    ], formatter: '.Formatter.sumItemOrder'}"
+                                    unit="USD" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
         </f:content>
     </f:DynamicPage>
 </mvc:View>

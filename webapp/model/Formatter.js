@@ -52,9 +52,17 @@ sap.ui.define([], function () {
 
             return UnitPrice * Quantity
         },
-        sumTotalItemOrder: function (Totais) {
-
-            return 10
+        handleNullText: function (obj) {
+            if (obj === null) {
+                return 'EMPTY'
+            } else {
+                return obj
+            }
+        },
+        handleNullState: function (obj) {
+            if (obj === null) {
+                return 'Error'
+            }
         }
     }
 });
