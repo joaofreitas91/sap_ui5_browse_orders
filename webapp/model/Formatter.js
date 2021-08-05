@@ -45,6 +45,16 @@ sap.ui.define([], function () {
             } else {
                 return "Success"
             }
+        },
+        sumItemOrder: function (UnitPrice, Quantity) {
+            // console.log(`Preço Unitário: ${UnitPrice}`)
+            // console.log(`Preço Unitário: ${Quantity}`)
+
+            return UnitPrice * Quantity
+        },
+        sumTotalItemOrder: function (Totais) {
+
+            return 10
         }
     }
 });

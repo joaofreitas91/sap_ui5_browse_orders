@@ -36,6 +36,24 @@ sap.ui.define([
                     "$expand": "Order_Details,Order_Details/Product"
                 },
                 success: function (res) {
+                    var obj = {}
+
+                    var lenght = res.Order_Details.results.length
+
+                    var results = res.Order_Details.results
+                    // console.log(results.length)
+                    var total = 0
+                    for (let contador = 0; contador < results.length; contador++) {
+                        total += (results[contador].UnitPrice * results[contador].Quantity)
+                        // console.log(total)
+                    }
+
+                    obj.lenght = lenght
+                    obj.total = total
+
+                    const newModel = new JSONModel(obj)
+                    this.getView().setModel(newModel, "modelTotal")
+
                     console.log(res)
                     // console.log(res.EmployeeID)
                     const model = new JSONModel(res)

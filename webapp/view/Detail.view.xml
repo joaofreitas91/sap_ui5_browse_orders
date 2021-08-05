@@ -8,7 +8,7 @@ xmlns:layout="sap.ui.layout">
         <f:title>
             <f:DynamicPageTitle>
                 <f:heading>
-                    <Title text="Order {modelDetail>/OrderID} (80)"/>
+                    <Title text="Order {modelDetail>/OrderID}"/>
                 </f:heading>
                 <f:navigationActions>
 						<Button
@@ -29,7 +29,7 @@ xmlns:layout="sap.ui.layout">
 
                     <layout:VerticalLayout>
                         <ObjectAttribute title="Price"/>
-                        <ObjectStatus text="Tem que arrumar um jeito pra pegar o total"  />
+                        <ObjectStatus text="{modelTotal>/total}"  />
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
@@ -39,7 +39,7 @@ xmlns:layout="sap.ui.layout">
                 <headerToolbar>
                     <OverflowToolbar>
                     <content> 
-                        <Title text="Products" level="H2"/>
+                        <Title text="Products ({modelTotal>/lenght})" level="H2"/>
                     </content> 
                     </OverflowToolbar>
                 </headerToolbar>
@@ -66,16 +66,19 @@ xmlns:layout="sap.ui.layout">
                     <ColumnListItem>
                         <cells>
                             <ObjectIdentifier
-                                title="Product Here"
-                                text="123"/>
+                                title="{modelDetail>Product/ProductName}"
+                                text="{modelDetail>ProductID}"/>
                             <ObjectNumber
-                                    number="{modelDetail>UnitPrice}"
-                                    unit="USD" />
+                                number="{modelDetail>UnitPrice}"
+                                unit="USD"/>
                             <ObjectNumber
-                                number="100.000" />
+                                number="{modelDetail>Quantity}" />
                             <ObjectNumber
-                                    number="44444"
-                                    unit="BTC" />
+                                number="{parts: [
+                                {path: 'modelDetail>UnitPrice'},
+                                {path: 'modelDetail>Quantity'}
+                                ], formatter: '.Formatter.sumItemOrder'}"
+                                unit="USD" />
                         </cells>
                     </ColumnListItem>
 		        </items>
