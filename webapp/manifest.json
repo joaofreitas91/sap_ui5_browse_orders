@@ -83,6 +83,11 @@
           "name": "Detail",
           "pattern": "detail/{orderPath}",
           "target": "Detail"
+        },
+        {
+          "name": "Dialog",
+          "pattern": "detail/{dialog}",
+          "target": "Dialog"
         }
       ],
       "targets": {
@@ -98,6 +103,12 @@
           "transition": "slide",
           "viewId": "Detail",
           "viewName": "Detail"
+        },
+        "Dialog": {
+          "viewType": "XML",
+          "transition": "slide",
+          "viewId": "Dialog",
+          "viewName": "Dialog"
         }
       }
     }

@@ -6,14 +6,20 @@ sap.ui.define([
     'sap/ui/core/BusyIndicator',
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    'sap/ui/core/Fragment'
 
-], function (Controller, ODataModel, JSONModel, Formatter, BusyIndicator, Filter, FilterOperator) {
+], function (Controller, ODataModel, JSONModel, Formatter, BusyIndicator, Filter, FilterOperator, Fragment) {
     'use strict';
 
     return Controller.extend("ProjBrowseOrders.browseorders.controller.Main", {
         Formatter: Formatter,
 
         onInit: function () {
+
+
+
+            this._mDialogs = {};
+
             // this.byId("listOrders").setBusy(true)
             BusyIndicator.show()
 
@@ -41,6 +47,29 @@ sap.ui.define([
                 }
             })
         },
+        _openDialog: function (sName, sPage, fInit) {
+
+            var oView = this.getView();
+
+            // creates requested dialog if not yet created
+            if (!this._mDialogs[sName]) {
+                this._mDialogs[sName] = Fragment.load({
+                    id: oView.getId(),
+                    name: "ProjBrowseOrders.browseorders.view." + sName,
+                    controller: this
+                }).then(function (oDialog) {
+                    oView.addDependent(oDialog);
+                    if (fInit) {
+                        fInit(oDialog);
+                    }
+                    return oDialog;
+                });
+            }
+            this._mDialogs[sName].then(function (oDialog) {
+                // opens the requested dialog
+                oDialog.open(sPage);
+            });
+        },
         onSearch: function (oEvent) {
             // add filter for search // adicionar filtro da pesquisa
             var aFilters = []; //Array que vai receber os dados para serem filtrados
@@ -64,6 +93,9 @@ sap.ui.define([
             var oList = this.byId("listOrders"); //pega o id da lista
             var oBinding = oList.getBinding("items"); //Pega os items da lista 
             oBinding.filter(aFilters);
+        },
+        handleOpenDialogFilter: function () {
+            this._openDialog("Dialog", "filter");
         },
         navDetail: function (oEvent) {
             var oOrders = oEvent.getSource().getBindingContext("modelOrders").getObject()
