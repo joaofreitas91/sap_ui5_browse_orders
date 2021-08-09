@@ -8,6 +8,7 @@ xmlns="sap.m"
         <subHeader>
             <Toolbar>
                 <SearchField width="30%" search=".onSearch"/>
+                <ToolbarSpacer/>
                 <Button icon="sap-icon://filter" type="Transparent" press="handleOpenDialogFilter" />
             </Toolbar>
         </subHeader>

@@ -6,9 +6,10 @@ sap.ui.define([
     'sap/ui/core/BusyIndicator',
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    'sap/ui/core/Fragment'
+    'sap/ui/core/Fragment',
+    'sap/m/MessageBox'
 
-], function (Controller, ODataModel, JSONModel, Formatter, BusyIndicator, Filter, FilterOperator, Fragment) {
+], function (Controller, ODataModel, JSONModel, Formatter, BusyIndicator, Filter, FilterOperator, Fragment, MessageBox) {
     'use strict';
 
     return Controller.extend("ProjBrowseOrders.browseorders.controller.Main", {
@@ -53,6 +54,7 @@ sap.ui.define([
 
             // creates requested dialog if not yet created
             if (!this._mDialogs[sName]) {
+
                 this._mDialogs[sName] = Fragment.load({
                     id: oView.getId(),
                     name: "ProjBrowseOrders.browseorders.view." + sName,
@@ -69,6 +71,12 @@ sap.ui.define([
                 // opens the requested dialog
                 oDialog.open(sPage);
             });
+        },
+        handleConfirm: function (evt) {
+            // criar filtro com base no que foi selecionado na função fiter homepage
+            const selected = evt.getSource().getSelectedFilterCompoundKeys()
+            MessageBox.error("Terminar essa função")
+
         },
         onSearch: function (oEvent) {
             // add filter for search // adicionar filtro da pesquisa
