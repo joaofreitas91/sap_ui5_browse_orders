@@ -4,7 +4,7 @@ xmlns:mvc="sap.ui.core.mvc"
 displayBlock="true" 
 xmlns="sap.m"
 >
-    <Page title="Orders (50)" >
+    <Page title="Orders ({modelLenght>/lenght})" >
         <subHeader>
             <Toolbar>
                 <SearchField width="30%" search=".onSearch"/>
@@ -12,7 +12,7 @@ xmlns="sap.m"
                 <Button icon="sap-icon://filter" type="Transparent" press="handleOpenDialogFilter" />
             </Toolbar>
         </subHeader>
-        <List items="{modelOrders>/}" id="listOrders">
+        <List items="{modelOrders>/}" id="listOrders" growing="true" growingThreshold="50" growingScrollToLoad="false">
             <ObjectListItem
                 title="Order {modelOrders>OrderID}"
                 type="Active"

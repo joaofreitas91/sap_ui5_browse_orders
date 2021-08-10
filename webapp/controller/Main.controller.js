@@ -16,9 +16,6 @@ sap.ui.define([
         Formatter: Formatter,
 
         onInit: function () {
-
-
-
             this._mDialogs = {};
 
             // this.byId("listOrders").setBusy(true)
@@ -35,7 +32,14 @@ sap.ui.define([
                     "$expand": "Customer"
                 },
                 success: function (response) {
-                    console.log(response.results[0])
+                    let obj = {}
+                    let lenght = response.results.length
+                    obj.lenght = lenght
+
+                    const modelLenght = new JSONModel(obj)
+                    this.getView().setModel(modelLenght, "modelLenght")
+
+                    // console.log(lenght)
 
                     const model = new JSONModel(response.results)
                     this.getView().setModel(model, "modelOrders")
@@ -73,17 +77,28 @@ sap.ui.define([
             });
         },
         handleConfirm: function (evt) {
-            // criar filtro com base no que foi selecionado na função fiter homepage
-            const selected = evt.getSource().getSelectedFilterCompoundKeys()
-            MessageBox.error("Terminar essa função")
 
+            var aFilters = []
+            var selected = evt.getSource().getSelectedFilterCompoundKeys()
+            var selectedKey = Number(Object.keys(selected.Order))
+
+            if (selectedKey > 0) {
+                debugger
+                var filter = new Filter("OrderID", FilterOperator.EQ, selectedKey)
+
+                aFilters.push(filter)
+            }
+            // debugger
+            var oList = this.byId("listOrders"); //pega o id da lista
+            var oBinding = oList.getBinding("items"); //Pega os items da lista 
+            oBinding.filter(aFilters);
         },
         onSearch: function (oEvent) {
             // add filter for search // adicionar filtro da pesquisa
             var aFilters = []; //Array que vai receber os dados para serem filtrados
             var sQuery = oEvent.getSource().getValue(); // Variavel que vai pegar o valor que está no Search Field da View
+            console.log(`sQuery - function onSearch ${sQuery}`)
             if (sQuery && sQuery.length > 0) { // Se o campo de pesquisa não for vazio
-
                 var filter = new Filter({
                     filters: [
                         new Filter("OrderID", FilterOperator.EQ, sQuery),
@@ -91,12 +106,10 @@ sap.ui.define([
                     ],
                     and: false
                 })
-
                 // var filter = new Filter("OrderID", FilterOperator.EQ, sQuery); // Variavel para criar uma nova pesquisa vendo se tem algo EQ(igual) dentro de Order ID
                 // var filterTwo = new Filter("Customer/CompanyName", FilterOperator.Contains, sQuery); // Variavel para criar uma nova pesquisa
                 aFilters.push(filter); // adicionar o que esta sendo pesquisado
             }
-
             // update list binding
             var oList = this.byId("listOrders"); //pega o id da lista
             var oBinding = oList.getBinding("items"); //Pega os items da lista 
