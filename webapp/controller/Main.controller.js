@@ -79,16 +79,30 @@ sap.ui.define([
         handleConfirm: function (evt) {
 
             var aFilters = []
+
             var selected = evt.getSource().getSelectedFilterCompoundKeys()
-            var selectedKey = Number(Object.keys(selected.Order))
 
-            if (selectedKey > 0) {
-                debugger
-                var filter = new Filter("OrderID", FilterOperator.EQ, selectedKey)
+            console.log(selected)
 
-                aFilters.push(filter)
+            var hasOrder = Object.prototype.hasOwnProperty.call(selected, 'Order')
+            var hasShipped = Object.prototype.hasOwnProperty.call(selected, 'Shipped')
+
+            if (hasOrder) {
+                var selectedKey = Object.keys(selected.Order)
+                for (let c = 0; c < selectedKey.length; c++) {
+                    var filter = new Filter("OrderID", FilterOperator.EQ, selectedKey[c])
+                    aFilters.push(filter)
+                }
             }
-            // debugger
+
+            if (hasShipped) {
+                var selectedKeyShipped = Object.keys(selected.Shipped)
+                for (let c = 0; c < selectedKeyShipped.length; c++) {
+                    var filter = new Filter("ShippedDate", FilterOperator.EQ, selectedKeyShipped[c])
+                    aFilters.push(filter)
+                }
+            }
+
             var oList = this.byId("listOrders"); //pega o id da lista
             var oBinding = oList.getBinding("items"); //Pega os items da lista 
             oBinding.filter(aFilters);

@@ -14,11 +14,9 @@
 					<ViewSettingsItem text="{modelOrders>OrderID}" key="{modelOrders>OrderID}" />
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Shipped" key="Shipped">
+			<ViewSettingsFilterItem text="Shipped" items="{modelOrders>/}" key="Shipped">
 				<items>
-					<ViewSettingsItem text="Value A" key="2a" />
-					<ViewSettingsItem text="Value B" key="2b" />
-					<ViewSettingsItem text="Value C" key="2c" />
+					<ViewSettingsItem text="{modelOrders>ShippedDate}" key="{modelOrders>ShippedDate}" />
 				</items>
 			</ViewSettingsFilterItem>
 		</filterItems>
