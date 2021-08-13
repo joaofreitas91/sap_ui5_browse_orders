@@ -1,24 +1,32 @@
-<core:FragmentDefinition
+<core:FragmentDefinition 
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
-	<ViewSettingsDialog
-		confirm="handleConfirm">
+	<ViewSettingsDialog confirm="handleConfirm" reset="handleReset">
 		<!-- <groupItems>
 			<ViewSettingsItem text="Field 1" key="1" selected="true" />
 			<ViewSettingsItem text="Field 2" key="2" />
 			<ViewSettingsItem text="Field 3" key="3" />
 		</groupItems> -->
+		<!-- <sortItems>
+			<ViewSettingsItem text="ID" key="Order" selected="true" />
+		</sortItems> -->
 		<filterItems>
-			<ViewSettingsFilterItem text="Orders" items="{modelOrders>/}" key="Order" >
+			<ViewSettingsFilterItem text="Orders" items="{modelOrders>/}" key="Order">
 				<items >
 					<ViewSettingsItem text="{modelOrders>OrderID}" key="{modelOrders>OrderID}" />
 				</items>
 			</ViewSettingsFilterItem>
-			<ViewSettingsFilterItem text="Shipped" items="{modelOrders>/}" key="Shipped">
-				<items>
-					<ViewSettingsItem text="{modelOrders>ShippedDate}" key="{modelOrders>ShippedDate}" />
-				</items>
-			</ViewSettingsFilterItem>
+			<ViewSettingsCustomItem
+				id="idCustomFilterItem"
+				text="Shipped"
+				key="myFilter">
+				<customControl>
+					<VBox class="sapUiTinyMargin">
+						<Label text="Start Date" labelFor="DRS1" />
+						<DateRangeSelection id="DRS1"/>
+					</VBox>
+				</customControl>
+			</ViewSettingsCustomItem>
 		</filterItems>
 	</ViewSettingsDialog>
 </core:FragmentDefinition>

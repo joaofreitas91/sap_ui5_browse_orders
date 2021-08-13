@@ -39,8 +39,6 @@ sap.ui.define([
                     const modelLenght = new JSONModel(obj)
                     this.getView().setModel(modelLenght, "modelLenght")
 
-                    // console.log(lenght)
-
                     const model = new JSONModel(response.results)
                     this.getView().setModel(model, "modelOrders")
                     BusyIndicator.hide()
@@ -52,11 +50,13 @@ sap.ui.define([
                 }
             })
         },
+        handleOpenDialogFilter: function () {
+            this._openDialog("Dialog", "filter");
+        },
         _openDialog: function (sName, sPage, fInit) {
 
             var oView = this.getView();
 
-            // creates requested dialog if not yet created
             if (!this._mDialogs[sName]) {
 
                 this._mDialogs[sName] = Fragment.load({
@@ -77,15 +77,24 @@ sap.ui.define([
             });
         },
         handleConfirm: function (evt) {
-
+            //array que vai receber os filtros
             var aFilters = []
 
+            //Filtro por intervalo de Datas
+            var datePicker = this.byId("DRS1")
+            var dateValue = datePicker.getDateValue()
+            var secondDateValue = datePicker.getSecondDateValue()
+
+            if (dateValue || secondDateValue) {
+                var filter = new Filter("ShippedDate", FilterOperator.BT, dateValue, secondDateValue)
+                aFilters.push(filter)
+            } else {
+                aFilters.pop()
+            }
+            // Filtro pelas ordens
             var selected = evt.getSource().getSelectedFilterCompoundKeys()
 
-            console.log(selected)
-
             var hasOrder = Object.prototype.hasOwnProperty.call(selected, 'Order')
-            var hasShipped = Object.prototype.hasOwnProperty.call(selected, 'Shipped')
 
             if (hasOrder) {
                 var selectedKey = Object.keys(selected.Order)
@@ -95,17 +104,15 @@ sap.ui.define([
                 }
             }
 
-            if (hasShipped) {
-                var selectedKeyShipped = Object.keys(selected.Shipped)
-                for (let c = 0; c < selectedKeyShipped.length; c++) {
-                    var filter = new Filter("ShippedDate", FilterOperator.EQ, selectedKeyShipped[c])
-                    aFilters.push(filter)
-                }
-            }
-
+            //Binding para aparecer os filtros na tela
             var oList = this.byId("listOrders"); //pega o id da lista
             var oBinding = oList.getBinding("items"); //Pega os items da lista 
             oBinding.filter(aFilters);
+        },
+        handleReset: function (event) {
+            var datePicker = this.byId("DRS1")
+            var dateValue = datePicker.setDateValue(null)
+            var secondDateValue = datePicker.setSecondDateValue(null)
         },
         onSearch: function (oEvent) {
             // add filter for search // adicionar filtro da pesquisa
@@ -128,9 +135,6 @@ sap.ui.define([
             var oList = this.byId("listOrders"); //pega o id da lista
             var oBinding = oList.getBinding("items"); //Pega os items da lista 
             oBinding.filter(aFilters);
-        },
-        handleOpenDialogFilter: function () {
-            this._openDialog("Dialog", "filter");
         },
         navDetail: function (oEvent) {
             var oOrders = oEvent.getSource().getBindingContext("modelOrders").getObject()
