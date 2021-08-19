@@ -1,0 +1,8 @@
+<mvc:View 
+xmlns:mvc="sap.ui.core.mvc" 
+displayBlock="true" 
+xmlns="sap.m">
+    <Page title="Detail 222222222">
+    </Page>
+    
+</mvc:View>

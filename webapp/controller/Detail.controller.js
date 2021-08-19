@@ -21,6 +21,10 @@ sap.ui.define([
             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             oRouter.navTo("Main")
         },
+        onNavMasterDetail: function () {
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("MasterDetail2")
+        },
         _onObjectMatched: function (oEvent) {
             BusyIndicator.show()
 
